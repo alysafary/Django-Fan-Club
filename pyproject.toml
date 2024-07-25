@@ -1,0 +1,30 @@
+[tool.poetry]
+name = "django-fan-club"
+version = "0"
+description = ""
+authors = ["ali <alysfryly075@gmail.com>"]
+readme = "README.md"
+
+[tool.poe.tasks]
+_lint_flake = { shell = "flake8 ." }
+_lint_black = { shell = "python -m black --check ." }
+dev = { shell = "python3 manage.py runserver" }
+makemigrations = { shell = "python3 manage.py makemigrations && git add */migrations/*" }
+migrate = "python3 manage.py migrate"
+shell = "python3 manage.py shell"
+lint = { sequence = ["_lint_flake", "_lint_black"] }
+test = "bash run_tests.sh"
+black = { shell = "black ." }
+celery = { shell = "python -m celery -A core_energy_backend worker -l info" }
+
+[tool.poetry.dependencies]
+python = "^3.10"
+django = "^5.0.7"
+djangorestframework = "^3.15.2"
+djangorestframework-simplejwt = "^5.3.1"
+black = "^24.4.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

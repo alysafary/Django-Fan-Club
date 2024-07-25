@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
 from django.db import models
 
 from app.models import Award
@@ -40,3 +41,8 @@ class ChallengeTransaction(models.Model):
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="challenge_transactions"
     )
+
+    def save(self, *args, **kwargs):
+        if self.challenge_item.transactions.filter(user=self.user).exists():
+            raise ValidationError("You can do a challenge just once")
+        super().save(*args, **kwargs)
