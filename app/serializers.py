@@ -15,6 +15,6 @@ class ChallengeItemSerializer(serializers.ModelSerializer):
 
 
 class ChallengePostSerializer(serializers.Serializer):
-    challenge_ids = serializers.ListField(
+    challenge_item_ids = serializers.ListField(
         child=serializers.IntegerField(), write_only=True
     )
